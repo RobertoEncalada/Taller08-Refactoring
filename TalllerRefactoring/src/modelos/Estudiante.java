@@ -4,11 +4,18 @@ import java.util.ArrayList;
 
 public class Estudiante extends Persona{
     //Informacion del estudiante
-    public String matricula;
-    public String facultad;
-    public ArrayList<Paralelo> paralelos;
+    private String matricula;
+    private String facultad;
+    private ArrayList<Paralelo> paralelos;
     
     //Getter y setter de Matricula
+    
+    public Estudiante(String matricula, String facultad, ArrayList<Paralelo> paralelos, String nombre, String apellido, int edad, String direccion, String telefono) {
+        super(nombre, apellido, edad, direccion, telefono);
+        this.matricula = matricula;
+        this.facultad = facultad;
+        this.paralelos = paralelos;
+    }
 
     public String getMatricula() {
         return matricula;
@@ -16,24 +23,6 @@ public class Estudiante extends Persona{
 
     public void setMatricula(String matricula) {
         this.matricula = matricula;
-    }
-
-    //Getter y setter del Nombre
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    
-    //Getter y setter del Apellido
-    public String getApellido() {
-        return apellido;
-    }
-
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
     }
     
     //Getter y setter de la Facultad
@@ -45,67 +34,26 @@ public class Estudiante extends Persona{
         this.facultad = facultad;
     }
     
-    //Getter y setter de la edad
-    public int getEdad() {
-        return edad;
-    }
-
-    public void setEdad(int edad) {
-        this.edad = edad;
-    }
-    
-    //Getter y setter de la direccion
-    public String getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
-    }
-    
-    //Getter y setter del telefono
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-    
     //Calcula y devuelve la nota inicial contando examen, deberes, lecciones y talleres. El teorico y el practico se calcula por parcial.
-    public double CalcularNotaInicial(Paralelo p, double nexamen,double ndeberes, double nlecciones, double ntalleres){
-        double notaInicial=0;
+    public double CalcularNota(Paralelo p, double nexamen,double ndeberes, double nlecciones, double ntalleres){
+        double nota=0;
         for(Paralelo par:paralelos){
             if(p.equals(par)){
                 double notaTeorico=(nexamen+ndeberes+nlecciones)*0.80;
                 double notaPractico=(ntalleres)*0.20;
-                notaInicial=notaTeorico+notaPractico;
+                nota=notaTeorico+notaPractico;
             }
         }
-        return notaInicial;
+        return nota;
     }
-    
-    //Calcula y devuelve la nota final contando examen, deberes, lecciones y talleres. El teorico y el practico se calcula por parcial.
-    
-    public double CalcularNotaFinal(Paralelo p, double nexamen,double ndeberes, double nlecciones, double ntalleres){
-        double notaFinal=0;
-        for(Paralelo par:paralelos){
-            if(p.equals(par)){
-                double notaTeorico=(nexamen+ndeberes+nlecciones)*0.80;
-                double notaPractico=(ntalleres)*0.20;
-                notaFinal=notaTeorico+notaPractico;
-            }
-        }
-        return notaFinal;
-    }
+
     
     //Calcula y devuelve la nota inicial contando examen, deberes, lecciones y talleres. Esta nota es solo el promedio de las dos calificaciones anteriores.
     public double CalcularNotaTotal(Paralelo p){
         double notaTotal=0;
         for(Paralelo par:paralelos){
             if(p.equals(par)){
-                notaTotal=(p.getMateria().notaInicial+p.getMateria().notaFinal)/2;
+                notaTotal=(p.getMateria().getNotaInicial()+p.getMateria().getNotaFinal())/2;
                 
             }
         }
